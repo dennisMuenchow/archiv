@@ -14,10 +14,7 @@
 		D42561202ADAB020000AD80E /* Habit_Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D425611E2ADAB020000AD80E /* Habit_Tracker.xcdatamodeld */; };
 		D42561222ADAB022000AD80E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D42561212ADAB022000AD80E /* Assets.xcassets */; };
 		D42561252ADAB022000AD80E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D42561232ADAB022000AD80E /* LaunchScreen.storyboard */; };
-		D425613A2ADAB673000AD80E /* RelationshipController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42561392ADAB673000AD80E /* RelationshipController.swift */; };
-		D425613C2ADAB685000AD80E /* HealthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D425613B2ADAB685000AD80E /* HealthController.swift */; };
-		D425613E2ADAB690000AD80E /* SkillController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D425613D2ADAB690000AD80E /* SkillController.swift */; };
-		D42561402ADAB698000AD80E /* CareerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D425613F2ADAB698000AD80E /* CareerController.swift */; };
+		D425613C2ADAB685000AD80E /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D425613B2ADAB685000AD80E /* ItemController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,10 +27,7 @@
 		D42561212ADAB022000AD80E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D42561242ADAB022000AD80E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D42561262ADAB022000AD80E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D42561392ADAB673000AD80E /* RelationshipController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipController.swift; sourceTree = "<group>"; };
-		D425613B2ADAB685000AD80E /* HealthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthController.swift; sourceTree = "<group>"; };
-		D425613D2ADAB690000AD80E /* SkillController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillController.swift; sourceTree = "<group>"; };
-		D425613F2ADAB698000AD80E /* CareerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareerController.swift; sourceTree = "<group>"; };
+		D425613B2ADAB685000AD80E /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +68,6 @@
 				D42561212ADAB022000AD80E /* Assets.xcassets */,
 				D42561232ADAB022000AD80E /* LaunchScreen.storyboard */,
 				D42561262ADAB022000AD80E /* Info.plist */,
-				D425611E2ADAB020000AD80E /* Habit_Tracker.xcdatamodeld */,
 			);
 			path = "Habit Tracker";
 			sourceTree = "<group>";
@@ -91,10 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				D42561192ADAB020000AD80E /* CategoryViewController.swift */,
-				D425613B2ADAB685000AD80E /* HealthController.swift */,
-				D42561392ADAB673000AD80E /* RelationshipController.swift */,
-				D425613D2ADAB690000AD80E /* SkillController.swift */,
-				D425613F2ADAB698000AD80E /* CareerController.swift */,
+				D425613B2ADAB685000AD80E /* ItemController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -102,6 +92,7 @@
 		D425612E2ADAB268000AD80E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D425611E2ADAB020000AD80E /* Habit_Tracker.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -178,13 +169,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D425611A2ADAB020000AD80E /* CategoryViewController.swift in Sources */,
-				D425613C2ADAB685000AD80E /* HealthController.swift in Sources */,
-				D425613A2ADAB673000AD80E /* RelationshipController.swift in Sources */,
+				D425613C2ADAB685000AD80E /* ItemController.swift in Sources */,
 				D42561202ADAB020000AD80E /* Habit_Tracker.xcdatamodeld in Sources */,
 				D42561162ADAB020000AD80E /* AppDelegate.swift in Sources */,
 				D42561182ADAB020000AD80E /* SceneDelegate.swift in Sources */,
-				D425613E2ADAB690000AD80E /* SkillController.swift in Sources */,
-				D42561402ADAB698000AD80E /* CareerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
