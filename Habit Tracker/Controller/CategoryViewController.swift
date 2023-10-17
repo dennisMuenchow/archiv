@@ -10,32 +10,33 @@ import UIKit
 
 class CategoryViewController: UIViewController {
     
-    var navbarTitle : String?
+    var selectedCategory: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func healthPressed(_ sender: UIButton) {
-        navbarTitle = "Health"
+        selectedCategory = "Health"
         performSegue(withIdentifier: "goToItems", sender: self)
     }
     @IBAction func relationshipsPressed(_ sender: UIButton) {
-        navbarTitle = "Relationships"
+        selectedCategory = "Relationships"
         performSegue(withIdentifier: "goToItems", sender: self)
     }
     @IBAction func skillsPressed(_ sender: UIButton) {
-        navbarTitle = "Skills"
+        selectedCategory = "Skills"
         performSegue(withIdentifier: "goToItems", sender: self)
     }
     @IBAction func careerPressed(_ sender: UIButton) {
-        navbarTitle = "Career"
+        selectedCategory = "Career"
         performSegue(withIdentifier: "goToItems", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToItems" {
             if let ItemController = segue.destination as? ItemController {
-                ItemController.navbarTitle = navbarTitle
+                ItemController.selectedCategory = selectedCategory
             }
         }
     }
