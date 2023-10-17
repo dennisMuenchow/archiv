@@ -48,11 +48,89 @@
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="WcP-ji-OMG" id="M7A-bp-0Gs"/>
+                        <segue destination="Ofg-zv-wYT" kind="presentation" identifier="goToAddItem" id="Yxy-DJ-TGQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xMi-QL-IGp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1416" y="-232"/>
+        </scene>
+        <!--Add Controller-->
+        <scene sceneID="iWX-jP-cI9">
+            <objects>
+                <viewController id="Ofg-zv-wYT" customClass="AddController" customModule="Habit_Tracker" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="95I-uN-hPz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TKD-hk-TRI">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                                <color key="barTintColor" systemColor="secondarySystemBackgroundColor"/>
+                                <items>
+                                    <navigationItem title="New Reminder" id="6J0-qd-obt">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="c2t-R9-Bup">
+                                            <connections>
+                                                <action selector="cancelPressed:" destination="Ofg-zv-wYT" id="196-IH-tVZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="VUs-3Y-35R">
+                                            <connections>
+                                                <action selector="savePressed:" destination="Ofg-zv-wYT" id="rKt-G9-VaN"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JUc-0c-RKI">
+                                <rect key="frame" x="10" y="76" width="373" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="omm-rN-GUg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Notes" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1gn-fn-zPD">
+                                <rect key="frame" x="10" y="131" width="373" height="150"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="T32-Bz-bD4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="l1O-xe-6A3">
+                                <rect key="frame" x="10" y="296" width="373" height="526"/>
+                                <locale key="locale" localeIdentifier="de_DE"/>
+                            </datePicker>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YsD-wa-McC"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="l1O-xe-6A3" firstAttribute="centerX" secondItem="95I-uN-hPz" secondAttribute="centerX" id="6Cj-N3-m33"/>
+                            <constraint firstItem="TKD-hk-TRI" firstAttribute="trailing" secondItem="YsD-wa-McC" secondAttribute="trailing" id="HSP-AE-Azc"/>
+                            <constraint firstItem="YsD-wa-McC" firstAttribute="trailing" secondItem="JUc-0c-RKI" secondAttribute="trailing" constant="10" id="Hw9-Er-rZq"/>
+                            <constraint firstItem="l1O-xe-6A3" firstAttribute="leading" secondItem="YsD-wa-McC" secondAttribute="leading" constant="10" id="MVe-W2-cHZ"/>
+                            <constraint firstItem="YsD-wa-McC" firstAttribute="trailing" secondItem="1gn-fn-zPD" secondAttribute="trailing" constant="10" id="MpY-oL-bYN"/>
+                            <constraint firstItem="1gn-fn-zPD" firstAttribute="leading" secondItem="YsD-wa-McC" secondAttribute="leading" constant="10" id="T2V-lE-UiB"/>
+                            <constraint firstItem="TKD-hk-TRI" firstAttribute="top" secondItem="YsD-wa-McC" secondAttribute="top" id="WiA-l3-F1S"/>
+                            <constraint firstItem="YsD-wa-McC" firstAttribute="bottom" secondItem="l1O-xe-6A3" secondAttribute="bottom" constant="20" id="ayK-wv-yWD"/>
+                            <constraint firstItem="l1O-xe-6A3" firstAttribute="top" secondItem="1gn-fn-zPD" secondAttribute="bottom" constant="15" id="cLy-uX-gNY"/>
+                            <constraint firstItem="JUc-0c-RKI" firstAttribute="leading" secondItem="YsD-wa-McC" secondAttribute="leading" constant="10" id="fvh-Aj-wZC"/>
+                            <constraint firstItem="1gn-fn-zPD" firstAttribute="top" secondItem="JUc-0c-RKI" secondAttribute="bottom" constant="5" id="qsD-JV-TSo"/>
+                            <constraint firstItem="JUc-0c-RKI" firstAttribute="top" secondItem="TKD-hk-TRI" secondAttribute="bottom" constant="20" id="s4H-Jw-PbZ"/>
+                            <constraint firstItem="TKD-hk-TRI" firstAttribute="leading" secondItem="YsD-wa-McC" secondAttribute="leading" id="vaz-qX-ayl"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="datePicker" destination="l1O-xe-6A3" id="eLG-nm-efy"/>
+                        <outlet property="noteField" destination="1gn-fn-zPD" id="hjA-6a-YE8"/>
+                        <outlet property="titleField" destination="JUc-0c-RKI" id="HXc-ke-lTL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tzN-wI-eg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2168.7022900763359" y="-232.3943661971831"/>
         </scene>
         <!--Category View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -136,6 +214,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

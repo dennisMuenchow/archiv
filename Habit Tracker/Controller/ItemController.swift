@@ -13,6 +13,7 @@ class ItemController: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
+    let date: Date = Date(timeIntervalSinceReferenceDate: 625_000)
     
     var selectedCategory: String?
     
@@ -21,8 +22,6 @@ class ItemController: UITableViewController {
         self.title = selectedCategory
         
         loadItems()
-        
-        
     }
     
     // MARK: - Table view data source
@@ -42,6 +41,11 @@ class ItemController: UITableViewController {
         // value = condition ? valueIfTrue : valueIfFalse
         cell.accessoryType = item.done == true ? .checkmark : .none
         
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM, dd, YYYY"
+        
+        cell.detailTextLabel?.text = formatter.string(from: date)
+        
         return cell
     }
     
@@ -54,27 +58,31 @@ class ItemController: UITableViewController {
     // MARK: - Add New Item
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var textField = UITextField()
-        let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
         
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create a new item"
-            textField = alertTextField
-        }
+        performSegue(withIdentifier: "goToAddItem", sender: self)
+
         
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            let newItem = Item(context: self.context)
-            newItem.title = textField.text!
-            newItem.done = false
-            newItem.category = self.selectedCategory
-            
-            self.itemArray.append(newItem)
-            self.saveItems()
-            print(newItem.category)
-        }
-        
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+      //  var textField = UITextField()
+      //  let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
+      //
+      //  alert.addTextField { (alertTextField) in
+      //      alertTextField.placeholder = "Create a new item"
+      //      textField = alertTextField
+      //  }
+      //
+      //  let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+      //      let newItem = Item(context: self.context)
+      //      newItem.title = textField.text!
+      //      newItem.done = false
+      //      newItem.category = self.selectedCategory
+      //
+      //      self.itemArray.append(newItem)
+      //      self.saveItems()
+      //      print(newItem.category)
+      //  }
+      //
+      //  alert.addAction(action)
+      //  self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Model Mamipulation Methods
@@ -94,11 +102,10 @@ class ItemController: UITableViewController {
     // 01 vom Typ Fetch-Request-Objeckt vom Typ NSFetchRequest<HealthItem>, Standardwert = Healthitem.fetchRequest()
     // 02 vom Typ optionales NSPredicate, Standardwert = nil
     func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-        
+ 
         // Filterung: Name der parentCategory MIT Name der selectedCategory
         request.predicate = NSPredicate(format: "category MATCHES %@", selectedCategory!)
-        print("selectedCategory: \(selectedCategory)" )
-        
+ 
         do {
             itemArray = try context.fetch(request)
         } catch {
