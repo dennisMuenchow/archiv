@@ -12,44 +12,39 @@ import CoreData
 class ItemController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
     let date: Date = Date(timeIntervalSinceReferenceDate: 625_000)
-    
-    
     var selectedCategory: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = selectedCategory
-                
         NotificationCenter.default.addObserver(self, selector: #selector(dataSaved), name: Notification.Name("DataSaved"), object: nil)
-
-        
         loadItems()
         tableView.reloadData()
     }
     
     @objc func dataSaved() {
         loadItems()
-
       }
+    
       deinit {
           // Vergessen Sie nicht, sich von der Benachrichtigung abzumelden, wenn der Controller nicht mehr benötigt wird
           NotificationCenter.default.removeObserver(self)
       }
 
-    
-
-    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemsCell", for: indexPath)
         let item = itemArray[indexPath.row]
@@ -68,15 +63,24 @@ class ItemController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        //saveItems()
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        saveItems()
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        // Item delete
-        context.delete(itemArray[indexPath.row])
-        itemArray.remove(at: indexPath.row)
-        tableView.reloadData()
-        
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // delete
+        let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
+            self.context.delete(self.itemArray[indexPath.row])
+            self.itemArray.remove(at: indexPath.row)
+            tableView.reloadData()
+            completionHandler(true)
+        }
+        delete.image = UIImage(systemName: "trash")
+        delete.backgroundColor = .red
+        // swipe actions
+        let swipe = UISwipeActionsConfiguration(actions: [delete])
+        return swipe
     }
     
     // MARK: - Add New Item
@@ -112,8 +116,6 @@ class ItemController: UITableViewController {
         tableView.reloadData()
     }
     
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToAddItem" {
             if let AddController = segue.destination as? AddController {
@@ -123,8 +125,6 @@ class ItemController: UITableViewController {
         }
     }
 }
-
-
 
 // MARK: - UISearchBar
 
