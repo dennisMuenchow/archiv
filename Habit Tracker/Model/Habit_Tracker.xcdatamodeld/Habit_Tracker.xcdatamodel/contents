@@ -4,6 +4,7 @@
         <attribute name="category" attributeType="String"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="done" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
     </entity>
 </model>

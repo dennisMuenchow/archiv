@@ -28,26 +28,27 @@ class AddController: UIViewController, UITextFieldDelegate {
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
         if let titleText = titleField.text, !titleText.isEmpty,
-           let noteText = noteField.text, !noteText.isEmpty {
+           let noteText = noteField.text {
             
             let targetDate = datePicker.date
+            
+            print("targetDate : \(targetDate)")
             
             let newItem = Item(context: self.context)
             newItem.title = titleText
             newItem.done = false
             newItem.category = self.selectedCategory
             newItem.date = targetDate
-            
-            print(newItem.title, newItem.done, newItem.category)
-            
+            newItem.note = noteText
             
             self.itemArray.append(newItem)
             self.saveItems()
             
-            
             dismiss(animated: true, completion: nil)
             
-            completion?(titleText, noteText, targetDate)
+            NotificationCenter.default.post(name: Notification.Name("DataSaved"), object: nil)
+
+            //completion?(titleText, noteText, targetDate)
         }
     }
     

@@ -23,9 +23,22 @@ class ItemController: UITableViewController {
         super.viewDidLoad()
         self.title = selectedCategory
                 
+        NotificationCenter.default.addObserver(self, selector: #selector(dataSaved), name: Notification.Name("DataSaved"), object: nil)
+
+        
         loadItems()
         tableView.reloadData()
     }
+    
+    @objc func dataSaved() {
+        loadItems()
+
+      }
+      deinit {
+          // Vergessen Sie nicht, sich von der Benachrichtigung abzumelden, wenn der Controller nicht mehr benötigt wird
+          NotificationCenter.default.removeObserver(self)
+      }
+
     
 
     
@@ -45,14 +58,25 @@ class ItemController: UITableViewController {
         // TERNARY OPERATOR:
         // value = condition ? valueIfTrue : valueIfFalse
         cell.accessoryType = item.done == true ? .checkmark : .none
-             
+        
+        let date = itemArray[indexPath.row].date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E.dd.MMM | HH:mm"
+        cell.detailTextLabel?.text = formatter.string(from: date!)
+
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        saveItems()
+       // itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        //saveItems()
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Item delete
+        context.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
+        tableView.reloadData()
+        
     }
     
     // MARK: - Add New Item
@@ -87,6 +111,8 @@ class ItemController: UITableViewController {
         }
         tableView.reloadData()
     }
+    
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToAddItem" {
