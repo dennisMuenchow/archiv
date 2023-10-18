@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 
+
 class ItemController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -15,14 +16,31 @@ class ItemController: UITableViewController {
     var itemArray = [Item]()
     let date: Date = Date(timeIntervalSinceReferenceDate: 625_000)
     
+    
     var selectedCategory: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = selectedCategory
+                
+        NotificationCenter.default.addObserver(self, selector: #selector(dataSaved), name: Notification.Name("DataSaved"), object: nil)
+
         
         loadItems()
+        tableView.reloadData()
     }
+    
+    @objc func dataSaved() {
+        loadItems()
+
+      }
+      deinit {
+          // Vergessen Sie nicht, sich von der Benachrichtigung abzumelden, wenn der Controller nicht mehr benötigt wird
+          NotificationCenter.default.removeObserver(self)
+      }
+
+    
+
     
     // MARK: - Table view data source
     
@@ -41,48 +59,30 @@ class ItemController: UITableViewController {
         // value = condition ? valueIfTrue : valueIfFalse
         cell.accessoryType = item.done == true ? .checkmark : .none
         
+        let date = itemArray[indexPath.row].date
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM, dd, YYYY"
-        
-        cell.detailTextLabel?.text = formatter.string(from: date)
-        
+        formatter.dateFormat = "E.dd.MMM | HH:mm"
+        cell.detailTextLabel?.text = formatter.string(from: date!)
+
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //selectedArray[indexPath.row].done = !selectedArray[indexPath.row].done
-        saveItems()
+       // itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        //saveItems()
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Item delete
+        context.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
+        tableView.reloadData()
+        
     }
     
     // MARK: - Add New Item
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        
         performSegue(withIdentifier: "goToAddItem", sender: self)
-
-        
-      //  var textField = UITextField()
-      //  let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
-      //
-      //  alert.addTextField { (alertTextField) in
-      //      alertTextField.placeholder = "Create a new item"
-      //      textField = alertTextField
-      //  }
-      //
-      //  let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-      //      let newItem = Item(context: self.context)
-      //      newItem.title = textField.text!
-      //      newItem.done = false
-      //      newItem.category = self.selectedCategory
-      //
-      //      self.itemArray.append(newItem)
-      //      self.saveItems()
-      //      print(newItem.category)
-      //  }
-      //
-      //  alert.addAction(action)
-      //  self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Model Mamipulation Methods
@@ -95,8 +95,6 @@ class ItemController: UITableViewController {
         }
         tableView.reloadData()
     }
-    
-    
     
     // Funktion mit zwei Parametern: 01: request , 02: predicate
     // 01 vom Typ Fetch-Request-Objeckt vom Typ NSFetchRequest<HealthItem>, Standardwert = Healthitem.fetchRequest()
@@ -113,6 +111,17 @@ class ItemController: UITableViewController {
         }
         tableView.reloadData()
     }
+    
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToAddItem" {
+            if let AddController = segue.destination as? AddController {
+                AddController.selectedCategory = selectedCategory
+                AddController.itemArray = itemArray
+            }
+        }
+    }
 }
 
 
@@ -125,16 +134,12 @@ extension ItemController: UISearchBarDelegate {
         
         // erstellt ein Request
         let request: NSFetchRequest<Item> = Item.fetchRequest()
-        
         // Filter-Query: %@ = searchBar.text, suche nach Item dessen Titel %@ enthält
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
         // Request + Filter-Query
         request.predicate = predicate
-        
         // Sortierung nach title
         request.sortDescriptors  = [NSSortDescriptor(key: "title", ascending: true)]
-        
         
         do {
             itemArray = try context.fetch(request)
