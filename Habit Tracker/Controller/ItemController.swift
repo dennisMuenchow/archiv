@@ -17,15 +17,21 @@ class ItemController: UITableViewController {
     var itemArray = [Item]()
     let date: Date = Date(timeIntervalSinceReferenceDate: 625_000)
     var selectedCategory: String?
+    var needsUpdate = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = selectedCategory
-        NotificationCenter.default.addObserver(self, selector: #selector(dataSaved), name: Notification.Name("DataSaved"), object: nil)
-        loadItems()
-        tableView.reloadData()
+         self.title = selectedCategory
+         NotificationCenter.default.addObserver(self, selector: #selector(dataSaved), name: Notification.Name("DataSaved"), object: nil)
+         loadItems()
+         tableView.reloadData()
+     }
+
+    @IBAction func backPressed(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+        NotificationCenter.default.post(name: Notification.Name("updateCategoryController"), object: nil)
     }
-    
+
     @objc func dataSaved() {
         loadItems()
       }
@@ -149,7 +155,7 @@ extension ItemController: UISearchBarDelegate {
         tableView.reloadData()
     }
     
-    // Verhalten, wenn SearchBar cleared wird
+    // Verhalten, wenn SearchBar bereinigt wird
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             loadItems()
