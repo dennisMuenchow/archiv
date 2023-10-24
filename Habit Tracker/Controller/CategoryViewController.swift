@@ -21,8 +21,8 @@ class CategoryViewController: UIViewController {
     @IBOutlet weak var skillsAnzahl: UILabel!
     @IBOutlet weak var karriereAnzahl: UILabel!
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    let segueToItems = "goToItems"
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let segueToItems = "goToItems"
     var itemArray = [Item]()
     var selectedCategory: String?
     

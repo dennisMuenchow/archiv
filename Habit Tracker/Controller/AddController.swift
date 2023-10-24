@@ -15,9 +15,9 @@ class AddController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var noteField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var selectedCategory: String?
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
+    var selectedCategory: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()

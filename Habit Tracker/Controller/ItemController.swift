@@ -13,11 +13,11 @@ class ItemController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
-    let date: Date = Date(timeIntervalSinceReferenceDate: 625_000)
+    private let date: Date = Date(timeIntervalSinceReferenceDate: 625_000)
     var selectedCategory: String?
-    var needsUpdate = false
+    private var needsUpdate = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
