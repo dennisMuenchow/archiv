@@ -15,10 +15,9 @@ class AddController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var noteField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    public var completion : ((String, String, Date) -> Void)?
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var selectedCategory: String?
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var itemArray = [Item]()
+    var selectedCategory: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +30,6 @@ class AddController: UIViewController, UITextFieldDelegate {
            let noteText = noteField.text {
             
             let targetDate = datePicker.date
-            
-            print("targetDate : \(targetDate)")
-            
             let newItem = Item(context: self.context)
             newItem.title = titleText
             newItem.done = false
@@ -44,11 +40,9 @@ class AddController: UIViewController, UITextFieldDelegate {
             self.itemArray.append(newItem)
             self.saveItems()
             
-            dismiss(animated: true, completion: nil)
-            
             NotificationCenter.default.post(name: Notification.Name("DataSaved"), object: nil)
 
-            //completion?(titleText, noteText, targetDate)
+            dismiss(animated: true, completion: nil)
         }
     }
     
